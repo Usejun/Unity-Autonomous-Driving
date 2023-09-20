@@ -18,7 +18,7 @@ public class BluetoothManagement : Singleton<BluetoothManagement>
     bool isConnected;
     string deviceName;
 
-    void Start()
+    void Awake()
     {
         isConnected = false;
         deviceName = "Not Connected";

@@ -1,21 +1,17 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using TMPro;
+using System;
 using UnityEngine;
+using System.Linq;
 using UnityEngine.Android;
-using UnityEngine.SceneManagement;
 
 public class BluetoothConnection : MonoBehaviour
 {
     BluetoothManagement bluetooth;
+    SceneLoader sceneLoader;
 
-    [SerializeField]
-    TMP_Dropdown dropdown;
+    [SerializeField] TMP_Dropdown dropdown;
 
-    [SerializeField]
-    TextMeshProUGUI selectedDevice;
+    [SerializeField] TextMeshProUGUI selectedDevice;
 
     public void Start()
     {
@@ -25,7 +21,7 @@ public class BluetoothConnection : MonoBehaviour
             !Permission.HasUserAuthorizedPermission("android.permission.BLUETOOTH_SCAN") ||
             !Permission.HasUserAuthorizedPermission("android.permission.BLUETOOTH_ADVERTISE") ||
             !Permission.HasUserAuthorizedPermission("android.permission.BLUETOOTH_CONNECT"))
-            Permission.RequestUserPermissions(new string[] {
+                Permission.RequestUserPermissions(new string[] {
                                     Permission.CoarseLocation,
                                     Permission.FineLocation,
                                     "android.permission.BLUETOOTH_SCAN",
@@ -34,6 +30,7 @@ public class BluetoothConnection : MonoBehaviour
 
 #endif
         bluetooth = BluetoothManagement.Instance;
+        sceneLoader = SceneLoader.Instance;
         BluetoothService.CreateBluetoothObject();
     }
 
@@ -57,15 +54,15 @@ public class BluetoothConnection : MonoBehaviour
         Log.AddLog("Searching...");
         try
         {
-            List<string> deviceNames = BluetoothService.GetBluetoothDevices().ToList();
+            string[] deviceNames = BluetoothService.GetBluetoothDevices();
             if (deviceNames == null)
                 Log.AddLog("Null...");
-            else if (deviceNames.Count == 0)
+            else if (deviceNames.Length == 0)
                 Log.AddLog("Nothing...");
             else
             {
-                dropdown.AddOptions(deviceNames);
-                Log.AddLog(string.Join(" ", deviceNames));
+                dropdown.AddOptions(deviceNames.ToList());
+                Log.AddLog(string.Join(", ", deviceNames));
             }
         }
         catch (Exception e)
@@ -77,6 +74,7 @@ public class BluetoothConnection : MonoBehaviour
 
     public void Connect()
     {
+        Log.AddLog("Connecting...");
         try
         {
             bluetooth.DeviceName = selectedDevice.text;
@@ -91,12 +89,7 @@ public class BluetoothConnection : MonoBehaviour
 
     public void Run()
     {
-        StartCoroutine(ChangeScene());
-    }
-
-    public IEnumerator ChangeScene()
-    {
-        yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene(1);
+        Log.AddLog("Starting...");
+        sceneLoader.Load("Control");
     }
 }
