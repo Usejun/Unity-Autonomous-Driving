@@ -18,10 +18,39 @@ public class BluetoothManagement : Singleton<BluetoothManagement>
     bool isConnected;
     string deviceName;
 
-    void Awake()
+    private void Awake()
     {
         isConnected = false;
         deviceName = "Not Connected";
+    }
+
+    private void Update()
+    {
+        if (IsConnected)
+        {
+            try
+            {
+                string recivedData = BluetoothService.ReadFromBluetooth();
+                Log.AddLog(recivedData);
+            }
+            catch
+            {
+            }
+        }
+    }
+
+    public bool Connect(string name)
+    {
+        deviceName = name;
+        bool connectionCondition = BluetoothService.StartBluetoothConnection(deviceName);
+        isConnected = connectionCondition;
+        return connectionCondition;
+    }
+
+    public void Disconnect()
+    {
+        BluetoothService.StopBluetoothConnection();
+        isConnected = false;
     }
 
 }

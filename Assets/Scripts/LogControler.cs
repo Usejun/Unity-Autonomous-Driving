@@ -11,7 +11,7 @@ public class LogControler : MonoBehaviour
 
     private void Awake()
     {        
-        logText = GetComponentInChildren<TextMeshProUGUI>();
+        logText = GetComponent<TextMeshProUGUI>();
     }
 
     private void Update()

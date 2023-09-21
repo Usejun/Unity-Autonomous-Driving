@@ -1,8 +1,12 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ClickMovement : MonoBehaviour
+public class NavigationMovement : MonoBehaviour
 {
+    int layerIndex = 3;
+
+    Vector3 nowMovePoint = Vector3.zero;
+
     NavMeshAgent agent;
 
     private void Awake()
@@ -12,25 +16,32 @@ public class ClickMovement : MonoBehaviour
 
     private void Update()
     {
+        Touch();
+    }
+
+    void Touch()
+    {
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
-            Ray ray = Camera.main.ScreenPointToRay(touch.position);
-
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
-                agent.SetDestination(hit.point);
-            }
+            Vector3 movePoint = Raycasting(touch.position);
+            nowMovePoint = movePoint;
+            agent.SetDestination(movePoint);
         }
+    }
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    Vector3 Raycasting(Vector3 point)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(point);
 
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
-                agent.SetDestination(hit.point);
-            }
-        }
+        if (Physics.Raycast(ray, out RaycastHit hit) &&
+            InspectRaycastObjectLayers(hit))
+            return hit.point;
+        return nowMovePoint;
+    }
+
+    bool InspectRaycastObjectLayers(RaycastHit hit)
+    {
+        return hit.transform.gameObject.layer == layerIndex;
     }
 }

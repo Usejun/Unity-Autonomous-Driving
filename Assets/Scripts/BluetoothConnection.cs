@@ -34,21 +34,6 @@ public class BluetoothConnection : MonoBehaviour
         BluetoothService.CreateBluetoothObject();
     }
 
-    public void Update()
-    {
-        if (bluetooth.IsConnected)
-        {
-            try
-            {
-                string recivedData = BluetoothService.ReadFromBluetooth();
-                Log.AddLog(recivedData);
-            }
-            catch (Exception)
-            {
-            }
-        }
-    }
-
     public void Search()
     {
         Log.AddLog("Searching...");
@@ -77,13 +62,24 @@ public class BluetoothConnection : MonoBehaviour
         Log.AddLog("Connecting...");
         try
         {
-            bluetooth.DeviceName = selectedDevice.text;
-            if (BluetoothService.StartBluetoothConnection(bluetooth.DeviceName))
-                Log.AddLog($"Successfully Connected to {bluetooth.DeviceName}");
+            bluetooth.Connect(selectedDevice.text);
         }
-        catch (Exception)
+        catch
         {
             Log.AddLog("Unable to Connect to the device");
+        }
+    }
+
+    public void Disconnect()
+    {
+        Log.AddLog($"disconnecting...");
+        try
+        {
+            bluetooth.Disconnect();
+        }
+        catch
+        {
+            Log.AddLog($"Can't disconnect to {bluetooth.DeviceName}");
         }
     }
 

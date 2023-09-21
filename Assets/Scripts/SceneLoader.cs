@@ -4,6 +4,11 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : Singleton<SceneLoader>
 {
+    public void Load(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
     public void Load(string sceneName, float delay = 1f)
     {
         StartCoroutine(DelayedSceneLoad(sceneName, delay));
