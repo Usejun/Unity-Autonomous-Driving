@@ -11,7 +11,13 @@ public class BluetoothManagement : Singleton<BluetoothManagement>
     public bool IsConnected => isConnected;
     public string DeviceName
     {
-        get => deviceName;
+        get
+        {
+            if (deviceName == null || deviceName == "")            
+                return "Not Connected";
+            return deviceName;
+        }
+           
         set => deviceName = value;
     }
 

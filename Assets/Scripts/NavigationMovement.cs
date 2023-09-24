@@ -3,7 +3,9 @@ using UnityEngine.AI;
 
 public class NavigationMovement : MonoBehaviour
 {
-    int layerIndex = 3;
+    public bool isMoving;
+
+    public float Speed => agent.speed;
 
     Vector3 nowMovePoint = Vector3.zero;
 
@@ -12,6 +14,7 @@ public class NavigationMovement : MonoBehaviour
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        isMoving = true;        
     }
 
     private void Update()
@@ -26,7 +29,7 @@ public class NavigationMovement : MonoBehaviour
             Touch touch = Input.GetTouch(0);
             Vector3 movePoint = Raycasting(touch.position);
             nowMovePoint = movePoint;
-            agent.SetDestination(movePoint);
+            agent.SetDestination(movePoint);                                     
         }
     }
 
@@ -34,14 +37,13 @@ public class NavigationMovement : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(point);
 
-        if (Physics.Raycast(ray, out RaycastHit hit) &&
-            InspectRaycastObjectLayers(hit))
+        if (isMoving && Physics.Raycast(ray, out RaycastHit hit))
             return hit.point;
         return nowMovePoint;
     }
 
-    bool InspectRaycastObjectLayers(RaycastHit hit)
+    public void SetSpeed(float speed)
     {
-        return hit.transform.gameObject.layer == layerIndex;
+        agent.speed = speed;
     }
 }

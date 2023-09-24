@@ -72,14 +72,14 @@ public class BluetoothConnection : MonoBehaviour
 
     public void Disconnect()
     {
-        Log.AddLog($"disconnecting...");
+        Log.AddLog($"Disconnecting...");
         try
         {
             bluetooth.Disconnect();
         }
         catch
         {
-            Log.AddLog($"Can't disconnect to {bluetooth.DeviceName}");
+            Log.AddLog($"Can't Disconnect to {bluetooth.DeviceName}");
         }
     }
 
@@ -87,5 +87,6 @@ public class BluetoothConnection : MonoBehaviour
     {
         Log.AddLog("Starting...");
         sceneLoader.Load("Control");
+        Log.Clear();
     }
 }
