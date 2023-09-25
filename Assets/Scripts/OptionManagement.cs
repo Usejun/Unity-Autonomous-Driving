@@ -27,6 +27,9 @@ public class OptionManagement : MonoBehaviour
     [SerializeField]
     NavigationMovement navMovement;
 
+    [SerializeField]
+    TMP_InputField sendMessage;
+
     private void Awake()
     {
         bluetooth = BluetoothManagement.Instance;
@@ -58,9 +61,15 @@ public class OptionManagement : MonoBehaviour
         navMovement.SetSpeed(speedSlider.value);
     }
 
+    public void BluetoothSend()
+    {
+        bluetooth.Send(sendMessage.text);
+    }
+
     public void Back()
     {
         sceneLoader.Load("Connect");
+        Log.Clear();
     }
     
 }

@@ -59,4 +59,14 @@ public class BluetoothManagement : Singleton<BluetoothManagement>
         isConnected = false;
     }
 
+    public void Send(string text)
+    {
+        BluetoothService.WritetoBluetooth(text);
+    }
+
+    public string Read()
+    {
+        return BluetoothService.ReadFromBluetooth();
+    }
+
 }

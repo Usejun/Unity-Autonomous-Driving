@@ -88,5 +88,6 @@ public class BluetoothConnection : MonoBehaviour
         Log.AddLog("Starting...");
         sceneLoader.Load("Control");
         Log.Clear();
+        Log.MaxLogCount = 15;       
     }
 }
