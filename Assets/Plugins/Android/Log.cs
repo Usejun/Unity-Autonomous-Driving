@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml;
 using UnityEngine;
 
 public static class Log
@@ -18,8 +17,13 @@ public static class Log
 
     public static void AddLog(string message)
     {
+        if (message == "" || message == null)
+            return;
+
         LogMessage msg = new LogMessage(message);
+
         logs.Enqueue(msg);
+
         if (logs.Count >= MaxLogCount)        
             GetLog();        
     }
@@ -39,7 +43,7 @@ public class LogMessage
 {
     public string Message => message;
 
-    string message;
+    readonly string message;
 
     public LogMessage(string message) 
     { 

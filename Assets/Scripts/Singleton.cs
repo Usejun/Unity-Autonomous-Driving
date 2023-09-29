@@ -13,14 +13,14 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
             if (instance == null)
             {
                 instance = (T)FindObjectOfType(typeof(T));
-                
-                if (instance != null)
+
+                if (instance == null)
                 {
                     GameObject obj = new GameObject(typeof(T).ToString());
-                    instance = obj.AddComponent<T>();
-
-                    DontDestroyOnLoad(obj);
+                    instance = obj.AddComponent<T>();                    
                 }
+
+                DontDestroyOnLoad(instance.gameObject);
             }
 
             return instance;

@@ -29,7 +29,7 @@ public class BluetoothService
             {
                 return BluetoothConnector.Call<string[]>("GetBluetoothDevices");
             }
-            catch (Exception e)
+            catch
             {
                 Log.AddLog("No Device found");
                 return null;
@@ -51,7 +51,7 @@ public class BluetoothService
                 if (connectionStatus == "Connected")
                     return true;
             }
-            catch (Exception e)
+            catch
             {
                 Log.AddLog($"Unable to connect to {DeviceName}");
             }
@@ -71,7 +71,7 @@ public class BluetoothService
                 Log.AddLog("Connction stoped");
 
             }
-            catch (Exception e)
+            catch
             {
                 Log.AddLog("Stop connction error");
             }
@@ -86,7 +86,7 @@ public class BluetoothService
             {
                 BluetoothConnector.Call("WriteData", data);
             }
-            catch (Exception e)
+            catch 
             {
                 Log.AddLog("Write data error");
             }
@@ -101,8 +101,9 @@ public class BluetoothService
             {
                 return BluetoothConnector.Call<string>("ReadData");
             }
-            catch (Exception e)
+            catch
             {
+                Log.AddLog("Can't Read");
                 BluetoothConnector.Call("PrintOnScreen", context, "Read data error");
             }
         }
