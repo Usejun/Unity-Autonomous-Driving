@@ -13,4 +13,9 @@ public class Grid : MonoBehaviour
         this.x = x;
         this.y = y;
     }
+
+    public bool Equals(Grid other)
+    {
+        return x == other.x && y == other.y;
+    }
 }

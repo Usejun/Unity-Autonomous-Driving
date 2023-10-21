@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class GridManagement : MonoBehaviour
 {
-    public bool pathFind = false;
-
     public int rows = 10;
     public int columns = 10;
     public int scale = 1;
@@ -21,7 +19,7 @@ public class GridManagement : MonoBehaviour
     public int endX = 2;
     public int endY = 2;
 
-    List<GameObject> path = new List<GameObject>();
+    public List<GameObject> path = new List<GameObject>();
 
     void Awake()
     {   
@@ -32,14 +30,10 @@ public class GridManagement : MonoBehaviour
         else print("Missing grid prefab, Please assign");
     }
 
-    void Update()
+    public bool Finding()
     {
-        if (pathFind)
-        {
-            SetDistance();
-            SetPath();
-            pathFind = false;
-        }
+        SetDistance();
+        return SetPath();
     }
 
     void GeneateGrid()
@@ -102,11 +96,11 @@ public class GridManagement : MonoBehaviour
         for (int step = 1; step < rows * columns; step++)
             foreach (GameObject obj in grids)
                 if (obj && obj.GetComponent<Grid>().visit == step - 1)
-                    PathFinding(obj.GetComponent<Grid>().x, obj.GetComponent<Grid>().y, step);
+                    PathFind(obj.GetComponent<Grid>().x, obj.GetComponent<Grid>().y, step);
 
     }
 
-    void PathFinding(int x, int y, int step)
+    void PathFind(int x, int y, int step)
     {
         if (Move(x, y, -1, 1))
             SetVisit(x, y + 1, step);
@@ -124,7 +118,7 @@ public class GridManagement : MonoBehaviour
             grids[x, y].GetComponent<Grid>().visit = step;
     }
 
-    void SetPath()
+    bool SetPath()
     {
         path.Clear();
 
@@ -142,7 +136,7 @@ public class GridManagement : MonoBehaviour
         else
         {
             Log.AddLog("This is a place you can't go.");
-            return;
+            return false;
         }
 
         for (; step > -1; step--)
@@ -163,9 +157,10 @@ public class GridManagement : MonoBehaviour
             x = obj.GetComponent<Grid>().x;
             y = obj.GetComponent<Grid>().y;
 
-            list.Clear();
-
+            list.Clear();           
         }
+
+        return true;
     }
 
     GameObject NextDirection(Transform target, List<GameObject> list)
@@ -183,5 +178,14 @@ public class GridManagement : MonoBehaviour
         }
 
         return list[index];   
+    }    
+
+    public void SetPosition(Grid start, Grid end)
+    {
+        startX = start.x;
+        startY = start.y;
+
+        endX = end.x;
+        endY = end.y;
     }
 }
