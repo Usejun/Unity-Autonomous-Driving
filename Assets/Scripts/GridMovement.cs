@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-enum Direction
+public enum Direction
 {
     Stop = 0b0000,
     Forward = 0b0001,
@@ -51,10 +51,7 @@ public class GridMovement : MonoBehaviour
     }
 
     void FixedUpdate()
-    {       
-        if (isTouched && gridManagement.path.Count > 0 && gridManagement.path[0].GetComponent<Grid>().Equals(nowGrid))
-            isTouched = false;
-
+    {             
         Touch();
     }
 
@@ -79,10 +76,7 @@ public class GridMovement : MonoBehaviour
                     SendDirection();
                 }
             }
-            else
-            {
-                isTouched = false;
-            }
+            StartCoroutine(DealyToTouch()); 
         }
     }
 
@@ -155,7 +149,7 @@ public class GridMovement : MonoBehaviour
 
     IEnumerator DealyToTouch()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.2f);
 
         isTouched = false;
     }
@@ -163,6 +157,6 @@ public class GridMovement : MonoBehaviour
     void SendDirection()
     {
         foreach (var dir in directions)
-            bluetooth.Send(((char)dir).ToString());
+            bluetooth.Send(dir);
     }
 }

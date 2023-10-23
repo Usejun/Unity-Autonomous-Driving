@@ -3,11 +3,11 @@ using System;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.Android;
+using UnityEngine.SceneManagement;
 
 public class BluetoothConnection : MonoBehaviour
 {
     BluetoothManagement bluetooth;
-    SceneLoader sceneLoader;
 
     [SerializeField] TMP_Dropdown dropdown;
 
@@ -30,7 +30,6 @@ public class BluetoothConnection : MonoBehaviour
 
 #endif
         bluetooth = BluetoothManagement.Instance;
-        sceneLoader = SceneLoader.Instance;
         BluetoothService.CreateBluetoothObject();
     }
 
@@ -86,7 +85,7 @@ public class BluetoothConnection : MonoBehaviour
     public void Run()
     {
         Log.AddLog("Starting...");
-        sceneLoader.Load("Control");
+        SceneManager.LoadScene("Control");
         Log.Clear();
         Log.MaxLogCount = 15;       
     }

@@ -1,10 +1,10 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class OptionManagement : MonoBehaviour
 {
     BluetoothManagement bluetooth;
-    SceneLoader sceneLoader;
 
     [SerializeField] GameObject optionScreen;
     [SerializeField] GameObject log;
@@ -18,7 +18,6 @@ public class OptionManagement : MonoBehaviour
     void Awake()
     {
         bluetooth = BluetoothManagement.Instance;
-        sceneLoader = SceneLoader.Instance;
 
         deviceNameText.text = "연결된 디바이스 : " + bluetooth.DeviceName;
     }
@@ -41,13 +40,13 @@ public class OptionManagement : MonoBehaviour
 
     public void Back()
     {
-        sceneLoader.Load("Connect");
+        SceneManager.LoadScene("Connect");
         Log.Clear();
     }
 
     public void Remote()
     {
-        sceneLoader.Load("Remote");
+        SceneManager.LoadScene("Remote");
         Log.Clear();
     }
     

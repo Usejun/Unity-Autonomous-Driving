@@ -1,10 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.Android;
-using UnityEngine;
-using TMPro;
-using System.Linq;
 
 public class BluetoothManagement : Singleton<BluetoothManagement>
 {
@@ -62,6 +56,16 @@ public class BluetoothManagement : Singleton<BluetoothManagement>
     public void Send(string text)
     {
         BluetoothService.WritetoBluetooth(text);
+    }
+
+    public void Send(int dir)
+    {
+        Send(Convert.ToChar(dir).ToString());
+    }
+
+    public void Send(Direction dir)
+    {
+        Send((int)dir);
     }
 
     public string Read()
