@@ -10,8 +10,8 @@ int milliseconds = 1000;
 typedef enum {
   Stop = 0b0000,
   Forward = 0b0001,
-  Right = 0b0010,
-  Left = 0b0100,
+  Left = 0b0010,
+  Right = 0b0100,
   Back = 0b1000
 } direction;
 
@@ -74,11 +74,11 @@ void move(int dir) {
     setMoter(0, Direct);
     setMoter(1, Direct);
   }
-  else if (dir == Right) { // 왼쪽
+  else if (dir == Left) { // 왼쪽
     setMoter(0, Reverse);
     setMoter(1, Direct);
   }
-  else if (dir == Left) { // 오른쪽
+  else if (dir == Right) { // 오른쪽
     setMoter(0, Direct);
     setMoter(1, Reverse);
   }
