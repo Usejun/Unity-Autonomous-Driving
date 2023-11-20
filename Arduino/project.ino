@@ -87,20 +87,20 @@ void move(int dir) {
     setMoter(1, Reverse);
   }
   else if (dir == Forward | Left) { // 왼쪽 앞
-    setMoter(0, Stop);
-    setMoter(1, Direct);
-  }
-  else if (dir == Forward | Right) { // 오른쪽 앞
     setMoter(0, Direct);
     setMoter(1, Stop);
   }
-  else if (dir == Back | Left) { // 왼쪽 뒤
+  else if (dir == Forward | Right) { // 오른쪽 앞
     setMoter(0, Stop);
-    setMoter(1, Reverse);
+    setMoter(1, Direct);
   }
-  else if (dir == Back | Right) { // 오른쪽 뒤
+  else if (dir == Back | Left) { // 왼쪽 뒤
     setMoter(0, Reverse);
     setMoter(1, Stop);
+  }
+  else if (dir == Back | Right) { // 오른쪽 뒤
+    setMoter(0, Stop);
+    setMoter(1, Reverse);
   }
 
   delay(milliseconds);
